@@ -1,0 +1,169 @@
+@@ -0,0 +1,168 @@
+
+# coding: utf-8
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+"""
+Course:             <CSC119 003 - Intro to Programming>
+Name:               <Daniel Taylor >
+
+Design:
+
+   Description:     <Depict the motion of a buffalo traveling in Yellowstone>
+
+    Input:          <random range>
+
+    Processing:     <Take random integer to move buffalo around Yellowstone>
+
+    Output:         <Depiction of buffalo moving on top of Yellowstone map>
+
+  
+"""
+
+
+# Imports --------------------------------------------------------------------
+
+# from foo import bar   # remove and add a real import statement
+
+
+import random
+
+
+# Main -----------------------------------------------------------------------
+
+
+
+#functions
+def position(horizontal_pos,horizontal_mov,vertical_pos,vertical_mov):
+    horizontal= horizontal_pos+horizontal_mov
+    vertical=vertical_pos + vertical_mov
+    return horizontal, vertical
+
+def movement():
+    horizontal_mov= random.randrange(-10,11)
+    vertical_mov= random.randrange(-10,11)
+    travel=abs(vertical_mov)+abs(horizontal_mov)
+    return horizontal_mov, vertical_mov, travel
+    
+def travel(horizontal_mov,vertical_mov):
+    value= abs(horizontal_mov)+abs(vertical_mov)
+    return value
+
+# Comment your code
+#set starting location 
+vertical_pos= 0
+horizontal_pos= 0
+#set initial movement to 0
+
+vertical_mov= 0
+horizontal_mov =0
+#set total distance travelled 
+
+total=0
+
+
+#create window
+
+from graphics import *
+import time
+win=GraphWin('Buffalo',500,500)
+
+#set background
+b = Image(Point(250,250),"MT_YellowstoneNatlPark.gif")
+Image.draw(b,win)
+
+#create buffalo
+c= Image(Point(250,250), "bison-50x44.gif")
+  
+Image.draw(c,win)
+
+
+#c=Circle(Point(250,250),25)
+#c.setFill("blue")   
+#Image.draw(c,win)
+#bison="bison.png"
+#c=Image(Point(250,250),"bison.png")
+#Image.draw(c,win)
+#c=Image(Point(250,250),"bison-25x22-flipped.png")  
+#c.draw(c,win)
+#myImage = Image(Point(5,5), "bison-25x22-flipped.png")
+#myImage.draw(win)
+
+
+
+#create for loop for day and hour
+for day in range (7):
+    for hour in range (24):
+        if hour ==0 and day ==0:
+            
+            # print starting position at day 0 hour 0
+            
+            
+            print ("The day is " + str(day) + ". The hour is " + str(hour) +". The buffalo is at position x: "+ str(horizontal_pos)+ " and y: " +str(vertical_pos) + ". The buffalo traveled " + str((horizontal_pos) + (vertical_pos))+" units")
+        
+        # prevent x and y coordinates from exceeding 240 units
+        
+        else:
+            if horizontal_pos>=240 or vertical_pos>=240:
+                horizontal_mov= random.randrange(-10,0)
+                c.move(horizontal_mov,0)
+                time.sleep(.1)
+                vertical_mov= random.randrange(-10,0)
+                c.move(0,vertical_mov)
+                time.sleep(.1)
+              
+                
+        #prevent x and y coordinates from going below -240 units
+        
+            elif horizontal_pos<=-240 or vertical_pos<=-240:
+                horizontal_mov= random.randrange(0,10)
+                c.move(horizontal_mov,0)
+                time.sleep(.1)
+                vertical_mov= random.randrange(0,10)
+                c.move(0,vertical_mov)
+                time.sleep(.1)
+                
+                
+        #unhindered movement          
+            else:        
+                horizontal_mov, vertical_mov, travel=movement()
+                #horizontal_mov= random.randrange(-10,10)
+                c.move(horizontal_mov,0)
+                time.sleep(.2)
+                #vertical_mov= random.randrange(-10,10)
+                c.move(0,vertical_mov)
+                time.sleep(.2)
+                
+                
+            
+            #find horizontal and vertical position
+
+                horizontal_pos,vertical_pos = position(horizontal_pos,horizontal_mov,vertical_pos,vertical_mov)
+              
+            
+            #find total distance traveled during that hour
+            
+           
+            
+            #find total distance traveled so far
+            total= total + travel
+            
+            
+            print ("The day is " + str(day) + ". The hour is " + str(hour) +". The buffalo is at position x: "+ str(horizontal_pos)+ " and y: " +str(vertical_pos) + ". The buffalo traveled " + str(travel) +" units. The buffalo has traveled "+ str(total)+ " units so far.")
+        
+win.promptClose(win.getWidth()/2,20)
+win.wait()
+          
+
+
+# In[ ]:
+
+
+
